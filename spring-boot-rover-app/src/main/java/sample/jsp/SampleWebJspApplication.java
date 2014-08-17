@@ -16,10 +16,6 @@
 
 package sample.jsp;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -38,7 +34,7 @@ public class SampleWebJspApplication extends SpringBootServletInitializer {
 		return application.sources(SampleWebJspApplication.class);
 	}
 
-	public static void main(String[] args)  {
+	public static void main(String[] args) {
 
 		SpringApplication.run(SampleWebJspApplication.class, args);
 	}

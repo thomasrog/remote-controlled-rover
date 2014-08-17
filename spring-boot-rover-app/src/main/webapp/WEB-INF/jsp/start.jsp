@@ -36,7 +36,9 @@
 	<div id="mainPane" class="jumbotron">
 		<h1>Home</h1>
 		<p>Some static content</p>
+		<!--  
 		<img src="http://192.168.178.23:8080/?action=stream/mjpg">
+		-->
 		<p>
 			<a class="btn btn-lg btn-primary" href="#navbar" role="button">Go
 				&raquo;</a>
@@ -55,8 +57,6 @@
 		});
 	</script>
 
-
-
 	<script src="/js/virtualjoystick.js"></script>
 	<script>
 		console.log("touchscreen is",
@@ -64,25 +64,26 @@
 						: "not available");
 
 		var joystick = new VirtualJoystick({
-			container : document.getElementById('mainPane'),
-			mouseSupport : true,
+			container : $("#mainPane").val(),
+			mouseSupport : true
 		});
-		joystick.addEventListener('touchStart', function() {
-			console.log('down')
-		})
-		joystick.addEventListener('touchEnd', function() {
-			console.log('up')
-		})
+		
+		console.log("start");
+		
+	
+		$("#mainPane").mousedown( function(){
+		    console.log("mousedown");
 
-		setInterval(function() {
-			var outputEl = document.getElementById('result');
-			outputEl.innerHTML = '<b>Result:</b> ' + ' dx:' + joystick.deltaX()
-					+ ' dy:' + joystick.deltaY()
-					+ (joystick.right() ? ' right' : '')
-					+ (joystick.up() ? ' up' : '')
-					+ (joystick.left() ? ' left' : '')
-					+ (joystick.down() ? ' down' : '')
-		}, 1 / 30 * 1000);
+			console.log(' dx:' +joystick.deltaX());
+			console.log(' dy:' + joystick.deltaY());
+			console.log(joystick.right() + ' right' );
+			console.log(joystick.up() + ' up' );
+			console.log(joystick.left() + ' left');
+			console.log(joystick.down() + ' down');
+		});
+	
+
+		
 	</script>
 </body>
 
