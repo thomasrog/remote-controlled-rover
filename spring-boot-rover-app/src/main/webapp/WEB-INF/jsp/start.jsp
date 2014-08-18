@@ -39,6 +39,7 @@
 		<!--  
 		<img src="http://192.168.178.23:8080/?action=stream/mjpg">
 		-->
+		<div style="border: solid black 1px;" id="innerMain"></div>
 		<p>
 			<a class="btn btn-lg btn-primary" href="#navbar" role="button">Go
 				&raquo;</a>
@@ -57,33 +58,26 @@
 		});
 	</script>
 
-	<script src="/js/virtualjoystick.js"></script>
+    <script src="/js/raphael-min.js"></script>
+    <!-- credits to: https://github.com/mattes/joystick-js -->
+	<script src="/js/joystick.jquery.js"></script>
 	<script>
-		console.log("touchscreen is",
-				VirtualJoystick.touchScreenAvailable() ? "available"
-						: "not available");
-
-		var joystick = new VirtualJoystick({
-			container : $("#mainPane").val(),
-			mouseSupport : true
-		});
-		
 		console.log("start");
-		
-	
-		$("#mainPane").mousedown( function(){
-		    console.log("mousedown");
 
-			console.log(' dx:' +joystick.deltaX());
-			console.log(' dy:' + joystick.deltaY());
-			console.log(joystick.right() + ' right' );
-			console.log(joystick.up() + ' up' );
-			console.log(joystick.left() + ' left');
-			console.log(joystick.down() + ' down');
-		});
-	
-
-		
+		$('#innerMain').joystick({
+			"width" : 950,
+			"height" : 600,
+			"pathColor" : "black",
+			"virtualPositionEasing" : "linear",
+			"virtualPositionMaxValue" : 10
+		}, positionCallback);
+		function positionCallback(x, y) {
+			_x = x;
+			_y = y;
+			
+			console.log("x : " + x);
+			console.log("y : " + y);
+		}
 	</script>
 </body>
 
