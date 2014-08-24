@@ -39,7 +39,8 @@ public class Joystick {
 
 	/**
 	 * convert cartesian coordinates to polar coordinates to determine servo
-	 * position
+	 * position velocity is always positive (abs from 0) wheel postion must
+	 * checked if positive or negative
 	 * 
 	 * */
 
@@ -47,6 +48,10 @@ public class Joystick {
 		return Math.hypot(this.x, this.y);
 	}
 
+	/**
+	 * positive angle is driving forward, negative means backward
+	 * 
+	 */
 	public double getWheehlPos() {
 
 		/*
