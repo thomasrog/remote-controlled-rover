@@ -77,6 +77,17 @@
 			
 			console.log("x : " + x);
 			console.log("y : " + y);
+			
+			$.ajax({
+				url : 'joystick/',
+				type : 'PUT',
+				contentType : 'application/json',
+				data : JSON.stringify({
+					"x" : x,
+					"y" : y
+				}),
+				dataType : 'json'
+			});
 		}
 	</script>
 </body>

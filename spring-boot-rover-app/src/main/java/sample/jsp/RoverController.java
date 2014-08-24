@@ -13,6 +13,10 @@ public class RoverController {
 	@RequestMapping(value = "/joystick", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateDose(@RequestBody Joystick changeTo) {
 
+	
+		System.out.println("wheel position: " + changeTo.getWheehlPos()
+				+ " velocity: " + changeTo.getVelocity());
+
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 

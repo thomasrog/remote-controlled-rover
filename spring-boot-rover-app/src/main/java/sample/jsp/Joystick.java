@@ -4,37 +4,49 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class Joystick {
 
-	@JsonProperty("left")
-	private int left;
-	@JsonProperty("right")
-	private int right;
-	@JsonProperty("up")
-	private int up;
-	@JsonProperty("down")
-	private int down;
+	@JsonProperty("x")
+	private double x;
+	@JsonProperty("y")
+	private double y;
 
-	public Joystick(int left, int right, int up, int down) {
+	public Joystick() {
 		super();
-		this.left = left;
-		this.right = right;
-		this.up = up;
-		this.down = down;
 	}
 
-	public int getLeft() {
-		return left;
+	public Joystick(double x, double y) {
+		super();
+		this.x = x;
+		this.y = y;
 	}
 
-	public int getRight() {
-		return right;
+	public double getX() {
+		return x;
 	}
 
-	public int getUp() {
-		return up;
+	public void setX(double x) {
+		this.x = x;
 	}
 
-	public int getDown() {
-		return down;
+	public double getY() {
+		return y;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	/**
+	 * convert cartesian coordinates to polar coordinates to determine servo
+	 * position
+	 * 
+	 * */
+
+	public double getVelocity() {
+		return Math.hypot(this.x, this.y);
+	}
+
+	public double getWheehlPos() {
+		return 180 * Math.atan2(this.x, this.y) / Math.PI;
 	}
 
 }
