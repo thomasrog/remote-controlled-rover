@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class RoverController {
 
 	@RequestMapping(value = "/joystick", method = RequestMethod.PUT)
-	public ResponseEntity<String> updateDose(@RequestBody Joystick changeTo) {
+	public ResponseEntity<String> updatePostion(@RequestBody Joystick changeTo) {
 
 	
 		System.out.println("wheel position: " + changeTo.getWheehlPos()
