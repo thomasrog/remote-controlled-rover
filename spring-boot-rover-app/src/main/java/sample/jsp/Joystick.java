@@ -1,5 +1,7 @@
 package sample.jsp;
 
+import java.awt.geom.AffineTransform;
+
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class Joystick {
@@ -46,7 +48,24 @@ public class Joystick {
 	}
 
 	public double getWheehlPos() {
-		return 180 * Math.atan2(this.x, this.y) / Math.PI;
+
+		/*
+		 * perform a 90 degree rotation of input x, y because moving the mouse
+		 * course up/down should accelerate the rover instead of moving right
+		 * and left
+		 */
+		double[] sourcePoint = { x, y };
+		double[] destPoint = { 0.0, 0.0 };
+		AffineTransform.getRotateInstance(Math.PI / 2).transform(sourcePoint,
+				0, destPoint, 0, 1); // specifying to use this double[] to hold
+										// coords
+		double newX = destPoint[0];
+		double newY = destPoint[1];
+
+		/*
+		 * cartesian to polar conversion
+		 */
+		return Math.toDegrees(Math.atan2(newX, newY));
 	}
 
 }
