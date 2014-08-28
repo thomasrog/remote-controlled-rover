@@ -30,7 +30,7 @@ public class ArduinoServoService {
 		super();
 	}
 
-	@PostConstruct
+	//@PostConstruct
 	private void connectArduino() {
 		serialPort = new SerialPort("/dev/tty.usbserial-A929L3BV");
 
