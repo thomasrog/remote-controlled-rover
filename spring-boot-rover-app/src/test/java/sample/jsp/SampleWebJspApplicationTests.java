@@ -25,7 +25,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import rover.SampleWebJspApplication;
+import rover.RoverApp;
 
 /**
  * Basic integration tests for JSP application.
@@ -33,7 +33,7 @@ import rover.SampleWebJspApplication;
  * @author Phillip Webb
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SampleWebJspApplication.class)
+@SpringApplicationConfiguration(classes = RoverApp.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
 @DirtiesContext

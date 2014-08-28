@@ -26,17 +26,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
-public class SampleWebJspApplication extends SpringBootServletInitializer {
+public class RoverApp extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(
 			SpringApplicationBuilder application) {
-		return application.sources(SampleWebJspApplication.class);
+		return application.sources(RoverApp.class);
 	}
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(SampleWebJspApplication.class, args);
+		SpringApplication.run(RoverApp.class, args);
 	}
 
 }
