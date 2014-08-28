@@ -16,6 +16,8 @@
 
 package rover;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -28,6 +30,10 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 public class RoverApp extends SpringBootServletInitializer {
 
+	
+	private static final Log log = LogFactory.getLog(RoverApp.class);
+	
+	
 	@Override
 	protected SpringApplicationBuilder configure(
 			SpringApplicationBuilder application) {
@@ -36,6 +42,7 @@ public class RoverApp extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 
+		log.debug("------------------------- start rover app -----------------------");
 		SpringApplication.run(RoverApp.class, args);
 	}
 
