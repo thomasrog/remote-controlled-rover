@@ -23,14 +23,14 @@ public class ArduinoServoService {
 
 	private SerialPortReader serialPortReader;
 
-	private final int servoStart = 30;
-	private final int servoEnd = 140;
+	private static int lastServo1Pos = 0;
+	private static int lastServo2Pos = 0;
 
 	public ArduinoServoService() {
 		super();
 	}
 
-	//@PostConstruct
+	@PostConstruct
 	private void connectArduino() {
 		serialPort = new SerialPort("/dev/tty.usbserial-A929L3BV");
 
@@ -51,24 +51,40 @@ public class ArduinoServoService {
 	}
 
 	public void moveServo1(int percent) throws Exception {
-
+		log.debug("percent servo1" + percent);
+	
+		final int servoStart = 50;
+		final int servoEnd = 150;
 		int servoDistance = servoEnd - servoStart;
-		int correctedServoPosition = servoStart + (percent / 100)
-				* servoDistance;
-		this.moveServo("S1", correctedServoPosition);
+		int correctedServoPosition = (int) (servoStart + ((float) percent / 100.0)
+				* servoDistance);
+
+		log.debug("servo1 " + correctedServoPosition);
+
+		if (Math.abs(lastServo1Pos - correctedServoPosition) > 10) {
+			this.moveServo("S1", correctedServoPosition);
+			lastServo1Pos = correctedServoPosition;
+		}
 	}
 
 	public void moveServo2(int percent) throws Exception {
+		log.debug("percent servo2" + percent);
+		final int servoStart = 30;
+		final int servoEnd = 90;
 		int servoDistance = servoEnd - servoStart;
-		int correctedServoPosition = servoStart + (percent / 100)
-				* servoDistance;
-		this.moveServo("S2", correctedServoPosition);
+		int correctedServoPosition = (int) (servoStart + ((float) percent / 100.0)
+				* servoDistance);
+		log.debug("servo2 " + correctedServoPosition);
+		if (Math.abs(lastServo2Pos - correctedServoPosition) > 10) {
+			this.moveServo("S2", correctedServoPosition);
+			lastServo2Pos = correctedServoPosition;
+		}
 	}
 
-	@Async
 	private void moveServo(String method, int servoPos) throws Exception {
 
 		if (!this.serialPortReader.isArduinoReady()) {
+			log.debug("arduino not connected");
 			return;
 		}
 

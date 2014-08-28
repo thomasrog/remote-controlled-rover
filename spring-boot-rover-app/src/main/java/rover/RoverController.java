@@ -38,7 +38,7 @@ public class RoverController {
 		}
 
 		try {
-			// this.arduinoService.moveServo1(wheelPosCorrected);
+			 this.arduinoService.moveServo2(wheelPosCorrected);
 
 			log.debug("wheelpos corrected " + wheelPosCorrected);
 		} catch (Exception e) {
@@ -63,7 +63,7 @@ public class RoverController {
 		try {
 			log.debug("velocityPosCorrectedpos corrected "
 					+ velocityPosCorrected);
-			// this.arduinoService.moveServo2(velocityPosCorrected);
+			 this.arduinoService.moveServo1(velocityPosCorrected);
 		} catch (Exception e) {
 			log.error("", e);
 		}
