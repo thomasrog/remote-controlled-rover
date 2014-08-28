@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package sample.jsp;
+package rover;
 
 import java.util.Map;
 
