@@ -1,6 +1,7 @@
 package rover;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
 
@@ -11,7 +12,7 @@ import jssc.SerialPortException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,8 +24,8 @@ public class ArduinoServoService {
 
 	private SerialPortReader serialPortReader;
 
-	private static int lastServo1Pos = 0;
-	private static int lastServo2Pos = 0;
+	private AtomicInteger lastServo1Pos = new AtomicInteger(0);
+	private AtomicInteger lastServo2Pos = new AtomicInteger(0);
 
 	public ArduinoServoService() {
 		super();
@@ -50,9 +51,9 @@ public class ArduinoServoService {
 
 	}
 
-	public void moveServo1(int percent) throws Exception {
+	public void moveServo1(int percent) {
 		log.debug("percent servo1" + percent);
-	
+
 		final int servoStart = 50;
 		final int servoEnd = 150;
 		int servoDistance = servoEnd - servoStart;
@@ -60,11 +61,34 @@ public class ArduinoServoService {
 				* servoDistance);
 
 		log.debug("servo1 " + correctedServoPosition);
+		lastServo1Pos.set(correctedServoPosition);
 
-		if (Math.abs(lastServo1Pos - correctedServoPosition) > 10) {
-			this.moveServo("S1", correctedServoPosition);
-			lastServo1Pos = correctedServoPosition;
+	}
+
+	@Scheduled(fixedRate = 600)
+	public void waitMovingFingersAtController() {
+
+		log.debug("waitMovingFingersAtController start");
+
+		try {
+			if (lastServo1Pos.get() != 0) {
+				this.moveServo("S1", lastServo1Pos.get());
+				lastServo1Pos.set(0);
+			}
+		} catch (Exception e) {
+			log.error("", e);
 		}
+
+		try {
+			if (lastServo2Pos.get() != 0) {
+				this.moveServo("S2", lastServo2Pos.get());
+				lastServo2Pos.set(0);
+			}
+		} catch (Exception e) {
+			log.error("", e);
+		}
+
+		log.debug("waitMovingFingersAtController end");
 	}
 
 	public void moveServo2(int percent) throws Exception {
@@ -75,10 +99,8 @@ public class ArduinoServoService {
 		int correctedServoPosition = (int) (servoStart + ((float) percent / 100.0)
 				* servoDistance);
 		log.debug("servo2 " + correctedServoPosition);
-		if (Math.abs(lastServo2Pos - correctedServoPosition) > 10) {
-			this.moveServo("S2", correctedServoPosition);
-			lastServo2Pos = correctedServoPosition;
-		}
+		lastServo2Pos.set(correctedServoPosition);
+
 	}
 
 	private void moveServo(String method, int servoPos) throws Exception {
@@ -93,7 +115,7 @@ public class ArduinoServoService {
 			log.debug("arduino command: " + arduinoCmd);
 			serialPort.writeBytes(arduinoCmd.getBytes());
 
-			Thread.sleep(500);
+			Thread.sleep(300);
 
 		} catch (SerialPortException e) {
 			log.error("write to arduino error", e);
