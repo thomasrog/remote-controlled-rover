@@ -12,6 +12,7 @@ import jssc.SerialPortException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -27,13 +28,16 @@ public class ArduinoServoService {
 	private AtomicInteger lastServo1Pos = new AtomicInteger(0);
 	private AtomicInteger lastServo2Pos = new AtomicInteger(0);
 
+	@Value("${serialDevice}")
+	private String serialDevice;
+
 	public ArduinoServoService() {
 		super();
 	}
 
 	@PostConstruct
 	private void connectArduino() {
-		serialPort = new SerialPort("/dev/tty.usbserial-A929L3BV");
+		serialPort = new SerialPort(serialDevice);
 
 		try {
 			serialPort.openPort();

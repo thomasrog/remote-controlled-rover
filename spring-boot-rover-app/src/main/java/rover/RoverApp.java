@@ -45,6 +45,7 @@ public class RoverApp extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 
 		log.debug("------------------------- start rover app -----------------------");
+		log.info("specify serial port with parameter: --serialDevice='yourdevice'");
 		SpringApplication.run(RoverApp.class, args);
 	}
 
