@@ -54,6 +54,7 @@ public class ArduinoServoService {
 		}
 
 	}
+	
 
 	public void moveServo1(int percent) {
 		log.debug("percent servo1" + percent);

@@ -10,6 +10,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css"
 	href="/webjars/bootstrap/3.0.3/css/bootstrap.min.css" />
+
+<style type="text/css">
+.img-overlay {
+	position: relative;
+	max-width: 500px;
+}
+
+.project-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	
+}
+</style>
 </head>
 
 
@@ -34,17 +50,12 @@
 		</div>
 	</div>
 	<div id="mainPane" class="jumbotron">
-		<h1>Home</h1>
-		<p>Some static content</p>
-		<!--  
-		<img src="http://192.168.178.23:8080/?action=stream/mjpg">
-		-->
-		<div style="border: solid black 1px;" id="innerMain"></div>
-		<p>
-			<a class="btn btn-lg btn-primary" href="#navbar" role="button">Go
-				&raquo;</a>
-		</p>
-		<div id="result"></div>
+		<div class="img-overlay">
+			<img src="http://<%=request.getLocalAddr()%>:8080/?action=stream/mjpg"
+				class="img-responsive" />
+			<div id="innerMain" class="project-overlay"></div>
+		</div>
+
 	</div>
 	<script type="text/javascript"
 		src="/webjars/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -58,8 +69,8 @@
 		});
 	</script>
 
-    <script src="/js/raphael-min.js"></script>
-    <!-- credits to: https://github.com/mattes/joystick-js -->
+	<script src="/js/raphael-min.js"></script>
+	<!-- credits to: https://github.com/mattes/joystick-js -->
 	<script src="/js/joystick.jquery.js"></script>
 	<script>
 		console.log("start");
@@ -67,17 +78,17 @@
 		$('#innerMain').joystick({
 			"width" : 950,
 			"height" : 600,
-			"pathColor" : "black",
+			"pathColor" : "red",
 			"virtualPositionEasing" : "linear",
 			"virtualPositionMaxValue" : 10
 		}, positionCallback);
 		function positionCallback(x, y) {
 			_x = x;
 			_y = y;
-			
+
 			console.log("x : " + x);
 			console.log("y : " + y);
-			
+
 			$.ajax({
 				url : 'joystick/',
 				type : 'PUT',
